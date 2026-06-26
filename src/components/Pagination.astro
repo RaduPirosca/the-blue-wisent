@@ -1,0 +1,25 @@
+---
+type PageLink = {
+  page: number;
+  href: string;
+};
+
+const { currentPage, totalPages, links } = Astro.props as {
+  currentPage: number;
+  totalPages: number;
+  links: PageLink[];
+};
+---
+
+{totalPages > 1 && (
+  <nav class="pagination" aria-label="Pagination">
+    {links.map((link) => (
+      <a
+        href={link.href}
+        aria-current={link.page === currentPage ? "page" : undefined}
+      >
+        {link.page}
+      </a>
+    ))}
+  </nav>
+)}

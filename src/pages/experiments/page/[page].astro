@@ -1,0 +1,69 @@
+---
+import TitleSearch from "@components/TitleSearch.astro";
+import Pagination from "@components/Pagination.astro";
+import { siteConfig } from "@config/site";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  getExperiments,
+  getExperimentsPageHref,
+  getPaginationRange,
+  getSearchItems,
+  getTotalPages,
+  ITEMS_PER_PAGE,
+} from "@lib/content";
+import { withBase } from "@lib/paths";
+
+export async function getStaticPaths() {
+  const experiments = await getExperiments();
+  const totalPages = getTotalPages(experiments.length);
+
+  return getPaginationRange(totalPages)
+    .filter((pageNumber) => pageNumber > 1)
+    .map((pageNumber) => ({
+      params: { page: String(pageNumber) },
+      props: {
+        page: {
+          currentPage: pageNumber,
+          data: experiments.slice((pageNumber - 1) * ITEMS_PER_PAGE, pageNumber * ITEMS_PER_PAGE),
+        },
+      },
+    }));
+}
+
+const { page } = Astro.props;
+const allExperiments = await getExperiments();
+const totalPages = getTotalPages(allExperiments.length);
+const paginationLinks = getPaginationRange(totalPages).map((pageNumber) => ({
+  page: pageNumber,
+  href: getExperimentsPageHref(pageNumber),
+}));
+const searchItems = getSearchItems({ experiments: allExperiments });
+---
+
+<BaseLayout title={`Experiments, page ${page.currentPage}`} description="Web programming experiments from The Blue Wisent.">
+  <section>
+    <div class="section-head">
+      <div>
+        <p class="kicker">Workshop</p>
+        <h1>Experiments</h1>
+      </div>
+      <p>{siteConfig.copy.experimentsArchive}</p>
+    </div>
+    <TitleSearch items={searchItems} label="Search experiments by title" />
+    <div class="grid">
+      {page.data.map((experiment) => (
+        <article class="card">
+          <p class="meta">{experiment.data.status} &middot; {experiment.data.date.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })}</p>
+          <h3><a href={withBase(experiment.data.link)}>{experiment.data.title}</a></h3>
+          <p>{experiment.data.description}</p>
+          {experiment.data.tags.length > 0 && (
+            <ul class="tag-list" aria-label="Tags">
+              {experiment.data.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          )}
+        </article>
+      ))}
+    </div>
+    <Pagination currentPage={page.currentPage} totalPages={totalPages} links={paginationLinks} />
+  </section>
+</BaseLayout>

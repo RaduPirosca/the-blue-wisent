@@ -1,0 +1,70 @@
+---
+import TitleSearch from "@components/TitleSearch.astro";
+import Pagination from "@components/Pagination.astro";
+import { siteConfig } from "@config/site";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  getPaginationRange,
+  getPublishedPosts,
+  getSearchItems,
+  getTotalPages,
+  getPostsPageHref,
+  ITEMS_PER_PAGE,
+} from "@lib/content";
+import { withBase } from "@lib/paths";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  const totalPages = getTotalPages(posts.length);
+
+  return getPaginationRange(totalPages)
+    .filter((pageNumber) => pageNumber > 1)
+    .map((pageNumber) => ({
+      params: { page: String(pageNumber) },
+      props: {
+        page: {
+          currentPage: pageNumber,
+          data: posts.slice((pageNumber - 1) * ITEMS_PER_PAGE, pageNumber * ITEMS_PER_PAGE),
+        },
+      },
+    }));
+}
+
+const { page } = Astro.props;
+const allPosts = await getPublishedPosts();
+const totalPages = getTotalPages(allPosts.length);
+const paginationLinks = getPaginationRange(totalPages).map((pageNumber) => ({
+  page: pageNumber,
+  href: getPostsPageHref(pageNumber),
+}));
+const searchItems = getSearchItems({ posts: allPosts });
+---
+
+<BaseLayout title={`Posts, page ${page.currentPage}`} description="Essays and notes from The Blue Wisent.">
+  <section>
+    <div class="section-head">
+      <div>
+        <p class="kicker">Archive</p>
+        <h1>Posts</h1>
+      </div>
+      <p>{siteConfig.copy.postsArchive}</p>
+    </div>
+    <TitleSearch items={searchItems} label="Search posts by title" />
+    <div class="grid">
+      {page.data.map((entry) => (
+        <article class="card">
+          <p class="meta">{entry.data.date.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })}</p>
+          <h3><a href={withBase(`posts/${entry.slug}/`)}>{entry.data.title}</a></h3>
+          {entry.data.subtitle && <p class="card-subtitle">{entry.data.subtitle}</p>}
+          <p>{entry.data.description}</p>
+          {entry.data.tags.length > 0 && (
+            <ul class="tag-list" aria-label="Tags">
+              {entry.data.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          )}
+        </article>
+      ))}
+    </div>
+    <Pagination currentPage={page.currentPage} totalPages={totalPages} links={paginationLinks} />
+  </section>
+</BaseLayout>

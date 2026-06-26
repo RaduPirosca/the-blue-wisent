@@ -1,0 +1,110 @@
+---
+type SearchItem = {
+  title: string;
+  href: string;
+  type: "Post" | "Experiment";
+  description?: string;
+};
+
+const { items = [], label = "Search by title" } = Astro.props as {
+  items: SearchItem[];
+  label?: string;
+};
+
+const searchId = `title-search-${Math.random().toString(36).slice(2)}`;
+const resultsId = `${searchId}-results`;
+---
+
+<form class="search-box" role="search" data-title-search>
+  <label for={searchId}>{label}</label>
+  <div class="search-row">
+    <input
+      id={searchId}
+      name="q"
+      type="search"
+      autocomplete="off"
+      placeholder="Type part of a title"
+      aria-describedby={resultsId}
+      data-search-input
+    />
+    <button type="button" data-search-clear aria-label="Clear search">Clear</button>
+  </div>
+  <div id={resultsId} class="search-results" aria-live="polite" data-search-results>
+    <p class="search-hint">Matching titles appear here.</p>
+  </div>
+  <script type="application/json" data-search-index set:html={JSON.stringify(items)} />
+</form>
+
+<script>
+  const searches = document.querySelectorAll("[data-title-search]");
+
+  for (const search of searches) {
+    const input = search.querySelector("[data-search-input]");
+    const clear = search.querySelector("[data-search-clear]");
+    const results = search.querySelector("[data-search-results]");
+    const indexNode = search.querySelector("[data-search-index]");
+
+    if (!(input instanceof HTMLInputElement) || !(clear instanceof HTMLButtonElement) || !results || !indexNode) {
+      continue;
+    }
+
+    const items = JSON.parse(indexNode.textContent || "[]");
+    const normalize = (value) => value.trim().toLocaleLowerCase();
+
+    const render = () => {
+      const query = normalize(input.value);
+
+      results.replaceChildren();
+
+      if (!query) {
+        const hint = document.createElement("p");
+        hint.className = "search-hint";
+        hint.textContent = "Matching titles appear here.";
+        results.append(hint);
+        return;
+      }
+
+      const matches = items.filter((item) => normalize(item.title).includes(query));
+
+      if (matches.length === 0) {
+        const hint = document.createElement("p");
+        hint.className = "search-hint";
+        hint.textContent = "No title match.";
+        results.append(hint);
+        return;
+      }
+
+      for (const item of matches) {
+        const article = document.createElement("article");
+        article.className = "search-result";
+
+        const meta = document.createElement("p");
+        meta.className = "meta";
+        meta.textContent = item.type;
+
+        const heading = document.createElement("h3");
+        const link = document.createElement("a");
+        link.href = item.href;
+        link.textContent = item.title;
+        heading.append(link);
+
+        article.append(meta, heading);
+
+        if (item.description) {
+          const description = document.createElement("p");
+          description.textContent = item.description;
+          article.append(description);
+        }
+
+        results.append(article);
+      }
+    };
+
+    input.addEventListener("input", render);
+    clear.addEventListener("click", () => {
+      input.value = "";
+      input.focus();
+      render();
+    });
+  }
+</script>
