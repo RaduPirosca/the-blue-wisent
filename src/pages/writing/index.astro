@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const posts = (await getCollection("posts"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Writing" description="Essays and notes from The Blue Wisent.">
+  <section>
+    <div class="section-head">
+      <div>
+        <p class="kicker">Archive</p>
+        <h1>Writing</h1>
+      </div>
+      <p>&lt;BLABLA-WRITING-ARCHIVE-INTRO-TO-BE-FILLED&gt;</p>
+    </div>
+    <div class="grid">
+      {posts.map((post) => (
+        <article class="card">
+          <p class="meta">{post.data.date.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })}</p>
+          <h3><a href={`${base}writing/${post.slug}/`}>{post.data.title}</a></h3>
+          <p>{post.data.description}</p>
+          {post.data.tags.length > 0 && (
+            <ul class="tag-list" aria-label="Tags">
+              {post.data.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

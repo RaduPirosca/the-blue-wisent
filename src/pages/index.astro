@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const posts = (await getCollection("posts"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const experiments = (await getCollection("experiments"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 2);
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div>
+      <p class="kicker">Personal field notes and web experiments</p>
+      <h1>The Blue Wisent</h1>
+    </div>
+    <div class="hero-panel">
+      <p class="lede">
+        &lt;BLABLA-HOMEPAGE-INTRO-TO-BE-FILLED: write two or three sentences about what this place is for, what you think about, and what kinds of experiments you want to keep here.&gt;
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Writing</h2>
+      <p>&lt;BLABLA-WRITING-SECTION-DESCRIPTION-TO-BE-FILLED&gt;</p>
+    </div>
+    <div class="grid">
+      {posts.map((post) => (
+        <article class="card">
+          <p class="meta">{post.data.date.toLocaleDateString("en", { year: "numeric", month: "short", day: "numeric" })}</p>
+          <h3><a href={`${base}writing/${post.slug}/`}>{post.data.title}</a></h3>
+          <p>{post.data.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Experiments</h2>
+      <p>&lt;BLABLA-EXPERIMENTS-SECTION-DESCRIPTION-TO-BE-FILLED&gt;</p>
+    </div>
+    <div class="grid">
+      {experiments.map((experiment) => (
+        <article class="card">
+          <p class="meta">{experiment.data.status} &middot; {experiment.data.date.toLocaleDateString("en", { year: "numeric", month: "short", day: "numeric" })}</p>
+          <h3><a href={`${base}${experiment.data.link.replace(/^\//, "")}`}>{experiment.data.title}</a></h3>
+          <p>{experiment.data.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

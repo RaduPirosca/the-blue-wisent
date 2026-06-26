@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const experiments = (await getCollection("experiments"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Experiments" description="Web programming experiments from The Blue Wisent.">
+  <section>
+    <div class="section-head">
+      <div>
+        <p class="kicker">Workshop</p>
+        <h1>Experiments</h1>
+      </div>
+      <p>
+        &lt;BLABLA-EXPERIMENTS-ARCHIVE-INTRO-TO-BE-FILLED: describe this as a place for small LLM tools, interface sketches, simulations, and future Three.js scenes.&gt;
+      </p>
+    </div>
+    <div class="grid">
+      {experiments.map((experiment) => (
+        <article class="card">
+          <p class="meta">{experiment.data.status} &middot; {experiment.data.date.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })}</p>
+          <h3><a href={`${base}${experiment.data.link.replace(/^\//, "")}`}>{experiment.data.title}</a></h3>
+          <p>{experiment.data.description}</p>
+          {experiment.data.tags.length > 0 && (
+            <ul class="tag-list" aria-label="Tags">
+              {experiment.data.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
