@@ -3,27 +3,27 @@ export const siteConfig = {
   description: "A personal blog and experiment garden.",
   nav: [
     { label: "Writing", href: "writing/", visible: true },
-    { label: "Experiments", href: "experiments/", visible: true },
+    { label: "Experiments", href: "experiments/", visible: false },
     { label: "About", href: "about/", visible: true },
   ],
   copy: {
     homeKicker: "Personal field notes and web experiments",
     homeIntro:
-      "<BLABLA-HOMEPAGE-INTRO-TO-BE-FILLED: write two or three sentences about what this place is for, what you think about, and what kinds of experiments you want to keep here.>",
+      "This is the place where all ideas in my head are going to live. Whether it's articles about stuff I am interested in, links and comments about cool stuff I read lately, or weird web experiments as I try out new technologies. Join me!",
     writingSection:
-      "<BLABLA-WRITING-SECTION-DESCRIPTION-TO-BE-FILLED>",
+      "A collection of my writing on various topics",
     writingArchive:
-      "<BLABLA-WRITING-ARCHIVE-INTRO-TO-BE-FILLED>",
+      "Read all of the things I've written about right here.",
     experimentsSection:
-      "<BLABLA-EXPERIMENTS-SECTION-DESCRIPTION-TO-BE-FILLED>",
+      "Try out the little apps and POCs I am making.",
     experimentsArchive:
-      "<BLABLA-EXPERIMENTS-ARCHIVE-INTRO-TO-BE-FILLED: describe this as a place for small LLM tools, interface sketches, simulations, and future Three.js scenes.>",
+      "This is a place where all wacky ideas can live. Trying out different technologies and concepts.",
     aboutLede:
-      "<BLABLA-ABOUT-LEDE-TO-BE-FILLED: write a short introduction to yourself and why this site exists.>",
+      "I am a software engineer from Bucharest with various interests. Come join me on my journey.",
     aboutWhatLivesHere:
-      "<BLABLA-WHAT-LIVES-HERE-TO-BE-FILLED: describe the kinds of writing, notes, programming experiments, LLM projects, visual sketches, and future Three.js work you want to publish.>",
+      "This website was born from a need to note down ideas and thoughts I had in my had. It comes down to being curious and learning about different topic, which you will notice because of the diversity. It is also because of a need to try out various technologies and weird tricks I am seeing online, in the form of experiments. I hope the things on this site can be of use to you.",
     aboutElsewhere:
-      "<BLABLA-LINKS-TO-BE-FILLED: add links to GitHub, email, social profiles, or anything else you want readers to find.>",
-    footer: "<BLABLA-FOOTER-NOTE-TO-BE-FILLED>",
+      "Collection of links to come here soon.",
+    footer: "Always be curious",
   },
 };
