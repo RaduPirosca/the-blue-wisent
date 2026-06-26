@@ -1,8 +1,10 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { withBase } from "@lib/paths";
 
 const { entry } = Astro.props;
-const { title, description, date, tags } = entry.data;
+const { title, subtitle, description, intro, date, updated, heroImage, tags } = entry.data;
+const resolveAsset = (path: string) => path.startsWith("/") ? withBase(path) : path;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -12,11 +14,23 @@ const { title, description, date, tags } = entry.data;
         <time datetime={date.toISOString()}>{date.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })}</time>
       </p>
       <h1>{title}</h1>
-      <p class="lede">{description}</p>
+      {subtitle && <p class="subtitle">{subtitle}</p>}
+      <p class="lede">{intro}</p>
+      {updated && (
+        <p class="updated">
+          Updated <time datetime={updated.toISOString()}>{updated.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })}</time>
+        </p>
+      )}
       {tags.length > 0 && (
         <ul class="tag-list" aria-label="Tags">
           {tags.map((tag) => <li>{tag}</li>)}
         </ul>
+      )}
+      {heroImage && (
+        <figure class="hero-image">
+          <img src={resolveAsset(heroImage.src)} alt={heroImage.alt} />
+          {heroImage.caption && <figcaption>{heroImage.caption}</figcaption>}
+        </figure>
       )}
     </header>
     <slot />

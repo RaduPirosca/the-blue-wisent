@@ -1,12 +1,13 @@
 ---
 import { getCollection } from "astro:content";
+import { siteConfig } from "@config/site";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { withBase } from "@lib/paths";
 
-const posts = (await getCollection("posts"))
-  .filter((post) => !post.data.draft)
+const writing = (await getCollection("writing"))
+  .filter((entry) => !entry.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="Writing" description="Essays and notes from The Blue Wisent.">
@@ -16,17 +17,18 @@ const base = import.meta.env.BASE_URL;
         <p class="kicker">Archive</p>
         <h1>Writing</h1>
       </div>
-      <p>&lt;BLABLA-WRITING-ARCHIVE-INTRO-TO-BE-FILLED&gt;</p>
+      <p>{siteConfig.copy.writingArchive}</p>
     </div>
     <div class="grid">
-      {posts.map((post) => (
+      {writing.map((entry) => (
         <article class="card">
-          <p class="meta">{post.data.date.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })}</p>
-          <h3><a href={`${base}writing/${post.slug}/`}>{post.data.title}</a></h3>
-          <p>{post.data.description}</p>
-          {post.data.tags.length > 0 && (
+          <p class="meta">{entry.data.date.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })}</p>
+          <h3><a href={withBase(`writing/${entry.slug}/`)}>{entry.data.title}</a></h3>
+          {entry.data.subtitle && <p class="card-subtitle">{entry.data.subtitle}</p>}
+          <p>{entry.data.description}</p>
+          {entry.data.tags.length > 0 && (
             <ul class="tag-list" aria-label="Tags">
-              {post.data.tags.map((tag) => <li>{tag}</li>)}
+              {entry.data.tags.map((tag) => <li>{tag}</li>)}
             </ul>
           )}
         </article>

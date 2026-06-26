@@ -11,19 +11,26 @@ npm run dev
 
 ## Add A Post
 
-Create a Markdown file in `src/content/posts/`.
+Create a Markdown file in `src/content/writing/`.
 
 ```md
 ---
 title: "Post Title"
+subtitle: "Optional subtitle."
 description: "Short summary."
+intro: "Opening paragraph shown with more visual weight."
 date: 2026-06-26
+heroImage:
+  src: "/images/writing/example.jpg"
+  alt: "Describe the image."
 tags: ["notes"]
 draft: false
 ---
 
 <ARTICLE-BODY-TO-BE-FILLED>
 ```
+
+See `CONTENT_GUIDE.md` for the full writing format, image conventions, and navigation config.
 
 ## Add An Experiment
 

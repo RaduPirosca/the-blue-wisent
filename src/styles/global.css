@@ -47,6 +47,10 @@ canvas {
   max-width: 100%;
 }
 
+img {
+  height: auto;
+}
+
 .site-shell {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
@@ -70,9 +74,9 @@ canvas {
 }
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
-  color: var(--blue);
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
 }
 
 .brand-name {
@@ -205,6 +209,14 @@ p {
   color: var(--muted);
 }
 
+.card-subtitle {
+  margin: 12px 0 0;
+  color: var(--spruce);
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  line-height: 1.4;
+}
+
 .meta {
   display: flex;
   gap: 10px;
@@ -243,6 +255,43 @@ p {
 .article h1 {
   max-width: none;
   font-size: clamp(2.8rem, 8vw, 5.8rem);
+}
+
+.subtitle {
+  max-width: 46rem;
+  margin: 18px 0 0;
+  color: var(--spruce);
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.28;
+}
+
+.updated {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.hero-image,
+.article figure {
+  margin: 34px 0;
+}
+
+.hero-image img,
+.article figure img,
+.article > p > img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper-deep);
+}
+
+.hero-image figcaption,
+.article figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 .article :where(h2, h3) {
