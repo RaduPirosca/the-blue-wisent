@@ -1,15 +1,15 @@
 ---
-title: "First Note"
-subtitle: "A small opening marker for the site."
-description: "<BLABLA-POST-DESCRIPTION-TO-BE-FILLED: summarize this first article in one sentence.>"
-intro: "<BLABLA-POST-INTRO-TO-BE-FILLED: write the opening paragraph that should feel more important than the rest of the article.>"
+title: "UKGE 2026"
+subtitle: "Thoughts on the 20th annual UK Games Expo"
+description: "Travelling to Birmingham for our second ever Board Gaming convention turned it into a staple for us."
+intro: "Last year was our first time going to the UK Games Expo (the second larges Board Game convention in Europe after Spiel in Germany). It was an amazing experience but also very overwhelming, and we left our weekend there feeling there was so much more we have not had time to experience. This year promised to be even bigger, but armed with the experience from before we were really able to make the most of it. What follows are my thoughts, structured as a review/guide for other people who want to attend."
 date: 2026-06-26
-updated: 2026-06-26
+# updated: 2026-06-26
 heroImage:
-  src: "/images/posts/first-note-placeholder.svg"
-  alt: "Abstract blue field-note lines"
-  caption: "Optional hero image caption."
-tags: ["notes"]
+  src: "/images/posts/ukge2026/convention-artwork.jpg"
+  alt: "UKGE Convention Art Work with Dragons wearing space helmets"
+  # caption: "Optional hero image caption."
+tags: ["boardgames", "ukge"]
 draft: false
 ---
 
