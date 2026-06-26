@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "The Blue Wisent",
   description: "A personal blog and experiment garden.",
   nav: [
-    { label: "Writing", href: "writing/", visible: true },
+    { label: "Posts", href: "posts/", visible: true },
     { label: "Experiments", href: "experiments/", visible: false },
     { label: "About", href: "about/", visible: true },
   ],
@@ -10,12 +10,14 @@ export const siteConfig = {
     homeKicker: "Personal field notes and web experiments",
     homeIntro:
       "This is the place where all ideas in my head are going to live. Whether it's articles about stuff I am interested in, links and comments about cool stuff I read lately, or weird web experiments as I try out new technologies. Join me!",
-    writingSection:
-      "A collection of my writing on various topics",
-    writingArchive:
+    postsSection:
+      // "A collection of my posts on various topics",
+      "",
+    postsArchive:
       "Read all of the things I've written about right here.",
     experimentsSection:
-      "Try out the little apps and POCs I am making.",
+      // "Try out the little apps and POCs I am making.",
+      "",
     experimentsArchive:
       "This is a place where all wacky ideas can live. Trying out different technologies and concepts.",
     aboutLede:

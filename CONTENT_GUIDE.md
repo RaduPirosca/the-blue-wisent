@@ -5,15 +5,15 @@
 Edit `src/config/site.ts` for site-wide text and navigation.
 
 - Set a nav item to `visible: false` to hide it from the header.
-- Edit `copy.homeIntro`, `copy.writingSection`, `copy.writingArchive`, and the other `copy` fields to replace the current BLABLA placeholders.
+- Edit `copy.homeIntro`, `copy.postsSection`, `copy.postsArchive`, and the other `copy` fields to replace the current BLABLA placeholders.
 - Internal navigation should use paths relative to the configured GitHub Pages base. The layouts already prefix links with Astro's `import.meta.env.BASE_URL`.
 
-## Writing Articles
+## Posts
 
 Add one Markdown file per article in:
 
 ```text
-src/content/writing/
+src/content/posts/
 ```
 
 Recommended filename format:
@@ -33,7 +33,7 @@ intro: "The opening paragraph rendered more prominently at the top of the articl
 date: 2026-06-26
 updated: 2026-06-26
 heroImage:
-  src: "/images/writing/example.jpg"
+  src: "/images/posts/example.jpg"
   alt: "Describe the image for readers using screen readers."
   caption: "Optional caption."
 tags: ["notes", "example"]
@@ -67,37 +67,37 @@ Astro creates the article URL from the markdown filename.
 Example:
 
 ```text
-src/content/writing/2026-06-26-first-note.md
+src/content/posts/2026-06-26-first-note.md
 ```
 
 becomes:
 
 ```text
-/the-blue-wisent/writing/2026-06-26-first-note/
+/the-blue-wisent/posts/2026-06-26-first-note/
 ```
 
-The same article appears automatically on the homepage writing preview and on the full Writing page when `draft: false`.
+The same article appears automatically on the homepage posts preview and on the full Posts page when `draft: false`.
 
 ## Images
 
 Put public article images in:
 
 ```text
-public/images/writing/
+public/images/posts/
 ```
 
 Use them in frontmatter:
 
 ```yaml
 heroImage:
-  src: "/images/writing/example.jpg"
+  src: "/images/posts/example.jpg"
   alt: "A useful image description."
 ```
 
 Use them inside Markdown:
 
 ```md
-![A useful image description](/images/writing/example.jpg)
+![A useful image description](/images/posts/example.jpg)
 ```
 
 The site has a small Markdown transform that rewrites root-relative image paths so they work on GitHub Pages under `/the-blue-wisent/`.

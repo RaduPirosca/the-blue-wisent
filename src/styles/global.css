@@ -171,6 +171,74 @@ p {
   padding-left: 22px;
 }
 
+.search-box {
+  margin: 28px 0 24px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(247, 244, 236, 0.72);
+}
+
+.search-box label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--spruce);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.search-row {
+  display: flex;
+  gap: 10px;
+}
+
+.search-row input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.38);
+  color: var(--ink);
+  font: inherit;
+}
+
+.search-row button {
+  flex: 0 0 auto;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper-deep);
+  color: var(--blue-deep);
+  font: inherit;
+  cursor: pointer;
+}
+
+.search-results {
+  margin-top: 14px;
+}
+
+.search-hint {
+  margin: 0;
+  color: var(--muted);
+}
+
+.search-result {
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.search-result h3 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.search-result p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
 .section-head {
   display: flex;
   align-items: end;
@@ -241,6 +309,29 @@ p {
   border-radius: 999px;
   color: var(--spruce);
   font-size: 0.82rem;
+}
+
+.pagination {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.pagination a {
+  display: inline-grid;
+  min-width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--blue-deep);
+  text-decoration: none;
+}
+
+.pagination a[aria-current="page"] {
+  background: var(--blue);
+  color: var(--paper);
 }
 
 .article {
@@ -351,8 +442,13 @@ p {
   }
 
   .hero,
+  .search-row,
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .search-row {
+    display: grid;
   }
 
   h1 {

@@ -1,20 +1,20 @@
 ---
-import { getCollection } from "astro:content";
+import TitleSearch from "@components/TitleSearch.astro";
 import { siteConfig } from "@config/site";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { getExperiments, getPublishedPosts, getSearchItems, ITEMS_PER_PAGE } from "@lib/content";
 import { withBase } from "@lib/paths";
 
-const writing = (await getCollection("writing"))
-  .filter((entry) => !entry.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
-
-const experiments = (await getCollection("experiments"))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 2);
-
+const allPosts = await getPublishedPosts();
+const allExperiments = await getExperiments();
 const isNavVisible = (href: string) => siteConfig.nav.some((item) => item.href === href && item.visible);
 const showExperiments = isNavVisible("experiments/");
+const visibleExperiments = showExperiments ? allExperiments : [];
+
+const posts = allPosts.slice(0, ITEMS_PER_PAGE);
+const experiments = visibleExperiments.slice(0, ITEMS_PER_PAGE);
+const searchItems = getSearchItems({ posts: allPosts, experiments: visibleExperiments });
+const searchLabel = showExperiments ? "Search posts and experiments by title" : "Search posts by title";
 ---
 
 <BaseLayout>
@@ -30,16 +30,18 @@ const showExperiments = isNavVisible("experiments/");
     </div>
   </section>
 
+  <TitleSearch items={searchItems} label={searchLabel} />
+
   <section>
     <div class="section-head">
-      <h2>Writing</h2>
-      <p>{siteConfig.copy.writingSection}</p>
+      <h2>Posts</h2>
+      <p>{siteConfig.copy.postsSection}</p>
     </div>
     <div class="grid">
-      {writing.map((entry) => (
+      {posts.map((entry) => (
         <article class="card">
           <p class="meta">{entry.data.date.toLocaleDateString("en", { year: "numeric", month: "short", day: "numeric" })}</p>
-          <h3><a href={withBase(`writing/${entry.slug}/`)}>{entry.data.title}</a></h3>
+          <h3><a href={withBase(`posts/${entry.slug}/`)}>{entry.data.title}</a></h3>
           {entry.data.subtitle && <p class="card-subtitle">{entry.data.subtitle}</p>}
           <p>{entry.data.description}</p>
         </article>
