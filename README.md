@@ -18,7 +18,7 @@ Create a Markdown file in `src/content/posts/`.
 title: "Post Title"
 subtitle: "Optional subtitle."
 description: "Short summary."
-intro: "Opening paragraph shown with more visual weight."
+intro: "Opening paragraph shown with more visual weight. Supports [Markdown links](https://example.com)."
 date: 2026-06-26
 heroImage:
   src: "/images/posts/example.jpg"

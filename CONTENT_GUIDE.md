@@ -29,7 +29,7 @@ Each article should start with frontmatter:
 title: "Article Title"
 subtitle: "Optional subtitle shown under the title."
 description: "One sentence used in article lists and page metadata."
-intro: "The opening paragraph rendered more prominently at the top of the article."
+intro: "The opening paragraph rendered more prominently at the top of the article. It can include [Markdown links](https://example.com), **emphasis**, and inline code."
 date: 2026-06-26
 updated: 2026-06-26
 heroImage:

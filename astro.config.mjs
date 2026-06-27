@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
-import { rehypeBaseImageSrc } from "./src/lib/rehypeBaseImageSrc.mjs";
+import remarkGfm from "remark-gfm";
+import { rehypeBaseImageSrc, rehypeImageCaptions } from "./src/lib/rehypeBaseImageSrc.mjs";
 
 const base = "/the-blue-wisent";
 
@@ -9,6 +10,7 @@ export default defineConfig({
   base,
   integrations: [mdx()],
   markdown: {
-    rehypePlugins: [[rehypeBaseImageSrc, { base }]],
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [[rehypeBaseImageSrc, { base }], rehypeImageCaptions],
   },
 });

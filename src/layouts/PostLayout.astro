@@ -1,10 +1,12 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { withBase } from "@lib/paths";
+import { marked } from "marked";
 
 const { entry } = Astro.props;
 const { title, subtitle, description, intro, date, updated, heroImage, tags } = entry.data;
 const resolveAsset = (path: string) => path.startsWith("/") ? withBase(path) : path;
+const introHtml = marked.parseInline(intro);
 ---
 
 <BaseLayout title={title} description={description}>
@@ -15,7 +17,7 @@ const resolveAsset = (path: string) => path.startsWith("/") ? withBase(path) : p
       </p>
       <h1>{title}</h1>
       {subtitle && <p class="subtitle">{subtitle}</p>}
-      <p class="lede">{intro}</p>
+      <p class="lede" set:html={introHtml} />
       {updated && (
         <p class="updated">
           Updated <time datetime={updated.toISOString()}>{updated.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" })}</time>

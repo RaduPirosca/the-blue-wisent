@@ -27,7 +27,6 @@ const resultsId = `${searchId}-results`;
       aria-describedby={resultsId}
       data-search-input
     />
-    <button type="button" data-search-clear aria-label="Clear search">Clear</button>
   </div>
   <div id={resultsId} class="search-results" aria-live="polite" data-search-results>
     <p class="search-hint">Matching titles appear here.</p>
@@ -40,11 +39,10 @@ const resultsId = `${searchId}-results`;
 
   for (const search of searches) {
     const input = search.querySelector("[data-search-input]");
-    const clear = search.querySelector("[data-search-clear]");
     const results = search.querySelector("[data-search-results]");
     const indexNode = search.querySelector("[data-search-index]");
 
-    if (!(input instanceof HTMLInputElement) || !(clear instanceof HTMLButtonElement) || !results || !indexNode) {
+    if (!(input instanceof HTMLInputElement) || !results || !indexNode) {
       continue;
     }
 
@@ -101,10 +99,5 @@ const resultsId = `${searchId}-results`;
     };
 
     input.addEventListener("input", render);
-    clear.addEventListener("click", () => {
-      input.value = "";
-      input.focus();
-      render();
-    });
   }
 </script>
